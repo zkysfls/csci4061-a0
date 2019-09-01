@@ -7,8 +7,17 @@ typedef struct node{
     int num;
 };
 
+typedef struct list{
+    struct node* first;
+    int size;
+};
+
 int* sort(char* input);
-node* make_list(int* arr);
+void make_list_init(list* l);
+int list_insert(list* l, int num);
+int make_list(list* l, int* arr);
+void clear_node(node* cur);
+void clear_list(list* l);
 void print_list(node* list);
 
 #endif

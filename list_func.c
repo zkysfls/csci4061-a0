@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "list.h"
 
 int* sort(char* input){
@@ -11,3 +12,59 @@ int* sort(char* input){
     return arr;
 }
 
+void make_list_init(list* l){
+    l->first = NULL;
+    l->size = 0;
+}
+
+int list_insert(list* l, int num){
+    node* insert = malloc(sizeof(node));
+    insert->front = NULL;
+    insert->back = NULL;
+    insert->num = num;
+    if(l->first == NULL){
+        l->first = insert;
+        l->size += 1;
+        return 0;
+    }
+    else{
+        node* current = l->first;
+        while(current->back != NULL){
+            current = current->back;
+        }
+        current->back = insert;
+        insert->front = current;
+        l->size += 1;
+        return 1;
+    }
+}
+
+int make_list(list* l, int* arr){
+    int len = sizeof(arr)/sizeof(int);
+    for(int i = 0; i < len; i++){
+        int j = list_insert(l, arr[i]);
+    }
+    return 1;
+}
+
+void clear_node(node* cur){
+    if(cur != NULL){
+        clear_node(cur->back);
+        free(cur);
+    }
+}
+
+void clear_list(list* l){
+    node* cur = l->first;
+    clear_node(cur);
+    l->first = NULL;
+    l->size = 0;
+}
+
+void print_list(list* l){
+    node* cur = l->first;
+    while(cur != NULL){
+        printf("%d ", cur->num);
+        cur = cur->back;
+    }
+}
