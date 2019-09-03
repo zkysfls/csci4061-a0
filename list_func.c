@@ -3,11 +3,21 @@
 #include <stdlib.h>
 #include "list.h"
 
-int* sort(char* input){
-    int len = strlen(input);
-    int arr[len];
-    for(int i = 0; i < len; i++){
-        arr[i] = atoi(input[i]);
+int* sort(int len, char** input){
+    int length = len - 1;
+    int* arr = malloc(sizeof(int) * length);
+    for(int i = 0; i < length; i++){
+        arr[i] = atoi(input[i + 1]);
+        //printf("%d\n", arr[i]);
+    }
+    for(int m = 0; m < length; m++){
+        for(int n = m + 1; n < length; n++){
+            if(arr[m] < arr[n]){
+                int temp = arr[n];
+                arr[n] = arr[m];
+                arr[m] = temp;
+            }
+        }
     }
     return arr;
 }
@@ -39,8 +49,7 @@ int list_insert(list* l, int num){
     }
 }
 
-int make_list(list* l, int* arr){
-    int len = sizeof(arr)/sizeof(int);
+int make_list(int len, list* l, int* arr){
     for(int i = 0; i < len; i++){
         int j = list_insert(l, arr[i]);
     }
@@ -67,4 +76,5 @@ void print_list(list* l){
         printf("%d ", cur->num);
         cur = cur->back;
     }
+    printf("\n");
 }
